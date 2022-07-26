@@ -1,0 +1,19 @@
+{
+  "name": "tes-bot",
+  "version": "0.0.1",
+  "description": "Leveling and utility bot for The Everything Server (TES).",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/onesoft-sudo/tes-bot.git"
+  },
+  "author": "Ar Rakin <rakinar2@gmail.com>",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/onesoft-sudo/tes-bot/issues"
+  },
+  "homepage": "https://github.com/onesoft-sudo/tes-bot#readme"
+}
