@@ -1,14 +1,29 @@
-
 import { registerCommands, registerEvents } from './utils/registry';
-import config from '../slappey.json';
 import DiscordClient from './client/client';
-import { Intents } from 'discord.js';
-const client = new DiscordClient({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES ] });
+import { IntentsBitField, Partials } from 'discord.js';
+import { config } from 'dotenv';
+
+config();
+
+const client = new DiscordClient({
+	intents: [
+		IntentsBitField.Flags.Guilds,
+		IntentsBitField.Flags.GuildMessages,
+		IntentsBitField.Flags.DirectMessages,
+		IntentsBitField.Flags.MessageContent,
+		IntentsBitField.Flags.GuildMembers,
+	],
+	partials: [
+		Partials.Channel,
+		Partials.Message,
+		Partials.Reaction
+	]
+});
 
 (async () => {
-  client.prefix = config.prefix || client.prefix;
+  // client.prefix = config.prefix || client.prefix;
   await registerCommands(client, '../commands');
   await registerEvents(client, '../events');
-  await client.login(config.token);
+  await client.login(process.env.TOKEN);
 })();
 
