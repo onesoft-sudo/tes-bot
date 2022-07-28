@@ -41,6 +41,10 @@ export default class MessageCreateEvent extends BaseEvent {
 			await client.userManager.create(message.author.id, message.guild!.id);
 		}
 
+		if (client.levelManager.sentMessageInLimit(message.member!)) {
+			return;
+		}
+		
 		const xpData = await client.levelManager.increaseLevel(message.member!);
 		
 		if (xpData) {

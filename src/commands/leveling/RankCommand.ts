@@ -11,7 +11,31 @@ export default class RankCommand extends BaseCommand {
     const data = await client.userManager.get(message.author.id, message.guild!.id);
 
     if (data) {
-    	await message.reply("Your level is: " + data.xp!.level! +  ", you need more " + (client.levelManager.getRequiredXPs(data.xp!.level! + 1) - data.xp!.total!) + "XPs to level up!");
+    	await message.reply({
+    		embeds: [
+    			{
+    				color: 0x007bff,
+    				author: {
+    					name: message.author.tag,
+    					icon_url: message.author.displayAvatarURL()
+    				},
+    				fields: [
+    					{
+    						name: 'Level',
+    						value: data.xp!.level! + ''
+    					},
+    					{
+    						name: 'XPs',
+    						value: data.xp!.total! + ''
+    					},
+    					{
+    						name: 'Required XPs to Level Up',
+    						value: (client.levelManager.getRequiredXPs(data.xp!.level!) - data.xp!.total!) + ''
+    					}
+    				]
+    			}
+    		]
+    	});
     }
   }
 }
