@@ -22,6 +22,14 @@ export default class MessageCreateEvent extends BaseEvent {
 			  const command = client.commands.get(cmdName);
 
 			  if (command) {
+				if (command.getCategory() === 'leveling') {
+					const user = await client.userManager.get(message.author.id, message.guild!.id);
+
+					if (!user) {
+						await client.userManager.create(message.author.id, message.guild!.id);
+					}
+				}
+			  
 			    command.run(client, message, cmdArgs);
 			    return;
 			  }
