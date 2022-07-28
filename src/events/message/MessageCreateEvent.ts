@@ -1,5 +1,5 @@
 import BaseEvent from '../../utils/structures/BaseEvent';
-import { Message } from 'discord.js';
+import { Message, ChannelType } from 'discord.js';
 import DiscordClient from '../../client/client';
 
 export default class MessageCreateEvent extends BaseEvent {
@@ -8,7 +8,7 @@ export default class MessageCreateEvent extends BaseEvent {
 	 }
 
 	 async run(client: DiscordClient, message: Message) {
-		if (message.author.bot) 
+		if (message.author.bot || !message.guild || message.channel.type === ChannelType.DM) 
 			return;
 
 		console.log(client.config[message.guild!.id], message.content);
@@ -27,6 +27,18 @@ export default class MessageCreateEvent extends BaseEvent {
 			  }
 		}
 
-		client.levelManager.increaseLevel(message.member!);	
+		const user = await client.userManager.get(message.author.id, message.guild!.id);
+
+		if (!user) {
+			await client.userManager.create(message.author.id, message.guild!.id);
+		}
+
+		const xpData = await client.levelManager.increaseLevel(message.member!);
+		
+		if (xpData) {
+			await message.channel.send({
+				content: `GG ${message.author.toString()}, you just reached level ${xpData}!`
+			});
+		}	
 	 }
 }

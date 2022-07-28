@@ -2,6 +2,7 @@ import { Client, ClientOptions, Collection } from 'discord.js';
 import BaseEvent from '../utils/structures/BaseEvent';
 import BaseCommand from '../utils/structures/BaseCommand';
 import LevelManager from '../services/LevelManager';
+import UserManager from '../services/UserManager';
 import Database from './Database';
 import config from '../../config/config.json';
 
@@ -14,12 +15,14 @@ export default class DiscordClient extends Client {
   private _events = new Collection<string, BaseEvent>();
   private _prefix: string = '!';
   levelManager: LevelManager;
+  userManager: UserManager;
   db: Database;
   config: ConfigType = {};
 
   constructor(options: ClientOptions) {
     super(options);
     this.levelManager = new LevelManager(this);
+    this.userManager = new UserManager(this);
     this.db = new Database(this);
     this.db.connect()
 		.then(() => console.log('Database connected'))
