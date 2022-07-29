@@ -11,8 +11,14 @@ export const userSchema = new mongoose.Schema({
 		required: true,
 	},
 	xp: {
-		total: Number,
-		level: Number
+		total: {
+			type: Number,
+			required: true
+		},
+		level: {
+			type: Number,
+			required: true
+		}
 	}
 });
 
