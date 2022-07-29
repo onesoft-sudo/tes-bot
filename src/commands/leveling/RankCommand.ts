@@ -26,7 +26,7 @@ export default class RankCommand extends BaseCommand {
     					},
     					{
     						name: 'XPs',
-    						value: data.xp!.total! + ''
+    						value: (client.levelManager.getTotalXPs(data.xp!.level!)) + data.xp!.total! + ''
     					},
     					{
     						name: 'Required XPs to Level Up',
