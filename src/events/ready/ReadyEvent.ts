@@ -5,6 +5,7 @@ export default class ReadyEvent extends BaseEvent {
   constructor() {
     super('ready');
   }
+  
   async run (client: DiscordClient) {
     console.log('Bot has logged in.');
   }
